@@ -1,0 +1,31 @@
+# 워크플로우 이름 설정
+name: ESLint Check
+
+# 워크플로우가 어떤 이벤트에 반응할지 정의
+on:
+  pull_request:
+    branches: [main] # 특정 브랜치로 병합될때만 워크플로우가 실행되도록
+
+# 워크플로우에서 실행할 작업 정의
+jobs:
+  check_eslint:
+    runs-on: ubuntu-latest # 작업을 실행할 환경 정의
+    steps: # 작업 단계 정의
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          check-latest: true
+
+      - name: Install dependencies
+        run: |
+          if [ -e package-lock.json ]; then
+            npm ci
+          else
+            npm i
+          fi
+
+      - name: Run ESLint
+        run: npm run lint
