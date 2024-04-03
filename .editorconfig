@@ -10,7 +10,7 @@ insert_final_newline = true
 charset = utf-8
 # Indentation override for all JS under lib directory
 indent_style = space
-indent_size = 2
+indent_size = 4
 # set to true to remove any whitespace characters preceding newline characters 
 trim_trailing_whitespace = true
 
