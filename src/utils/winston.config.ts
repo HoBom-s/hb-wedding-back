@@ -1,51 +1,51 @@
-import winston from "winston";
-import winstonDaily from "winston-daily-rotate-file";
-import process from "process";
+import { WinstonModule, utilities } from "nest-winston";
+import * as winston from "winston";
+import * as winstonDaily from "winston-daily-rotate-file";
 
-/**
- *  WIP
- * [] winston, morgan config
- * [] env config
- * */
-
-const { combine, timestamp, label, printf } = winston.format;
+const { combine, timestamp, ms } = winston.format;
 
 const logDir = `${process.cwd()}/logs`;
+const koreanTime = () => {
+    return new Date().toLocaleString("ko-Ko", { timeZone: "Asia/Seoul" });
+};
 
-const logFormat = printf(({ level, message, label, timestamp }) => {
-    return `${timestamp} [${label}] ${level}: ${message}`;
-});
+const daily = (level: string) => {
+    return {
+        level,
+        datePattern: "YYYY-MM-DD",
+        dirname: `${logDir}/${level}`,
+        filename: `%DATE%.${level}.log`,
+        maxFiles: 30,
+        zippedArchive: true,
+        format: combine(
+            timestamp(),
+            utilities.format.nestLike("HBWD", {
+                colors: false,
+                prettyPrint: true,
+            }),
+        ),
+    };
+};
 
-const logger = winston.createLogger({
-    // 출력방식
-    format: combine(
-        timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-        label({ label: "HB-WEDDING" }),
-        logFormat,
-    ),
+const winstonLogger = WinstonModule.createLogger({
     // 기록방식
     transports: [
-        new winstonDaily({
-            level: "info",
-            datePattern: "YYYY-MM-DD",
-            dirname: logDir,
-            filename: `%DATE%.log`,
-            maxFiles: 30,
-            zippedArchive: true,
+        new winston.transports.Console({
+            format: combine(
+                timestamp({ format: koreanTime }),
+                ms(),
+                utilities.format.nestLike("HOBOM-WEDDING", {
+                    prettyPrint: true,
+                    colors: true,
+                }),
+            ),
         }),
+
+        new winstonDaily(daily("error")),
     ],
 
-    // uncaughtException 발생시 파일 설정
-    exceptionHandlers: [
-        new winstonDaily({
-            level: "error",
-            datePattern: "YYYY-MM-DD",
-            dirname: logDir,
-            filename: `%DATE%.exception.log`,
-            maxFiles: 30,
-            zippedArchive: true,
-        }),
-    ],
+    // Exceptions 발생시 파일 설정
+    exceptionHandlers: [new winstonDaily(daily("error"))],
 });
 
-export default logger;
+export default winstonLogger;
