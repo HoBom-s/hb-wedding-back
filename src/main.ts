@@ -1,12 +1,23 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import winstonLogger from "./utils/winston.config";
+import { winstonLogger } from "./common/utils/winston.config";
+import * as Sentry from "@sentry/node";
+import { SentryInterceptor } from "./global/interceptors/sentry.interceptor";
+import { GLOBAL_ENV } from "./config/global.env.config";
 
 async function bootstrap() {
-    const PORT = 3000;
+    Sentry.init({
+        dsn: GLOBAL_ENV.SENTRY_DNS,
+    });
+
+    const PORT = GLOBAL_ENV.SERVER_PORT;
     const app = await NestFactory.create(AppModule, { logger: winstonLogger });
+
+    app.useGlobalInterceptors(new SentryInterceptor());
+
     await app.listen(PORT, () =>
         console.log(`SERVER IS RUNNING ON PORT ${PORT}`),
     );
 }
+
 bootstrap();
