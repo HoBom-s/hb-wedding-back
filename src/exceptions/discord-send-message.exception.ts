@@ -1,4 +1,4 @@
-import { winstonLogger } from "src/common/utils/winston.config";
+import { winstonLogger } from "src/utils/winston.util";
 
 export class DiscordSendMessageException extends Error {
     constructor(msg: string) {
