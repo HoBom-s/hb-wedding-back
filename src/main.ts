@@ -1,6 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { winstonLogger } from "./common/utils/winston.config";
+import { winstonLogger } from "./utils/winston.util";
 import * as Sentry from "@sentry/node";
 import { SentryInterceptor } from "./global/interceptors/sentry.interceptor";
 import { GLOBAL_ENV } from "./config/global.env.config";

@@ -7,7 +7,7 @@ import {
 import { catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import * as Sentry from "@sentry/minimal";
-import { sendDiscordMessage } from "src/common/utils/discord.config";
+import { DiscordUtil } from "src/utils/discord.util";
 
 @Injectable()
 export class SentryInterceptor implements NestInterceptor {
@@ -16,12 +16,8 @@ export class SentryInterceptor implements NestInterceptor {
             catchError(async (error) => {
                 Sentry.captureException(error);
 
-                /**
-                 * @TODO
-                 *      당장은 toString()으로 하고 있지만,, 차후에는 Error마다 Class를 만들어서
-                 *      msg만 뽑을 수 있도록 수정.
-                 */
-                await sendDiscordMessage(error.toString());
+                const discordUtil = new DiscordUtil();
+                await discordUtil.sendDiscordMessage(error.toString());
 
                 return of(error);
             }),
