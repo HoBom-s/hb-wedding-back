@@ -1,8 +1,11 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     HttpStatus,
+    Param,
+    Patch,
     Post,
     UseFilters,
 } from "@nestjs/common";
@@ -11,6 +14,8 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CategoryCreateDto } from "../dto/category-create.dto";
 import { Category } from "../entity/category.entity";
 import { HttpExceptionFilter } from "src/global/filters/http-exception.filter";
+import { CategoryUpdateDto } from "../dto/category-update.dto";
+import { CategoryDeleteDto } from "../dto/category-delete.dto";
 
 @Controller("api/v1/category")
 @UseFilters(HttpExceptionFilter)
@@ -30,6 +35,22 @@ export class CategoryController {
             await this.categoryService.createCategory(categoryCreateDto);
 
         return createdCategory;
+    }
+
+    @Patch()
+    async updatecategory(@Body() categoryUpdateDto: CategoryUpdateDto) {
+        const updatedCategory =
+            await this.categoryService.updateCategory(categoryUpdateDto);
+
+        return updatedCategory;
+    }
+
+    @Delete(":id")
+    async deleteCategory(@Param() categoryDeleteDto: CategoryDeleteDto) {
+        const deletedCategory =
+            await this.categoryService.deleteCategory(categoryDeleteDto);
+
+        return deletedCategory;
     }
 
     @Get()
