@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import { ValidationPipe } from "@nestjs/common";
+import { BadRequestException, ValidationPipe } from "@nestjs/common";
 import * as Sentry from "@sentry/node";
 import { GLOBAL_ENV } from "./config/global.env.config";
 import { SwaggerConfig } from "./config/swagger.config";
@@ -23,14 +23,15 @@ async function bootstrap() {
 
     const app = await NestFactory.create(AppModule, { logger: winstonLogger });
 
-    app.useGlobalInterceptors(new SentryInterceptor());
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,
             stopAtFirstError: true,
+            exceptionFactory: (errors) => new BadRequestException(errors),
         }),
     );
     app.useGlobalFilters(new HttpExceptionFilter());
+    app.useGlobalInterceptors(new SentryInterceptor());
 
     app.enableCors(corsOptions);
 

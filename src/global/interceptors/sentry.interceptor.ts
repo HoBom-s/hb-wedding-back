@@ -5,7 +5,6 @@ import {
     NestInterceptor,
 } from "@nestjs/common";
 import { catchError } from "rxjs/operators";
-import { of } from "rxjs";
 import * as Sentry from "@sentry/minimal";
 import { DiscordUtil } from "src/utils/discord.util";
 
@@ -19,7 +18,7 @@ export class SentryInterceptor implements NestInterceptor {
                 const discordUtil = new DiscordUtil();
                 await discordUtil.sendDiscordMessage(error.toString());
 
-                return of(error);
+                throw error;
             }),
         );
     }

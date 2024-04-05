@@ -3,21 +3,13 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class CategoryCreateDto {
     @ApiProperty({ description: "Category's name", example: "New category" })
-    @IsString({
-        message: "Category name must be string !",
-    })
-    @IsNotEmpty({
-        message: "Category name must be defined !",
-    })
+    @IsString()
+    @IsNotEmpty()
     readonly name: string;
 
     @ApiProperty({ description: "Category's path", example: "path" })
-    @IsString({
-        message: "Category path must be string !",
-    })
-    @IsNotEmpty({
-        message: "Category path must be defined !",
-    })
+    @IsString()
+    @IsNotEmpty()
     readonly path: string;
 
     @ApiProperty({
@@ -26,6 +18,6 @@ export class CategoryCreateDto {
     })
     @IsNumber()
     @IsPositive()
-    @IsNotEmpty({ message: "Category sort count must be defined !" })
+    @IsNotEmpty()
     readonly sortCount: number;
 }
