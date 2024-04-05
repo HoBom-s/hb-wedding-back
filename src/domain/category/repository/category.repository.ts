@@ -17,6 +17,10 @@ export class CategoryRepository {
         return this.categoryRepository.save(categoryCreateDto);
     }
 
+    async findAllCategories(): Promise<Category[]> {
+        return this.categoryRepository.find();
+    }
+
     async findByCategoryName(categoryName: string): Promise<Category> {
         return this.categoryRepository.findOne({
             where: {

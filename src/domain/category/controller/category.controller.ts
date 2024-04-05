@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Post } from "@nestjs/common";
 import { CategoryService } from "../service/category.service";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CategoryCreateDto } from "../dto/category.dto";
@@ -23,5 +23,17 @@ export class CategoryController {
             await this.categoryService.createCategory(categoryCreateDto);
 
         return createdCategory;
+    }
+
+    @Get("/")
+    @ApiOperation({
+        summary: "Category findAll",
+        description: "You can get all categories.",
+    })
+    @ApiResponse({ status: HttpStatus.OK })
+    async findeAllCategories(): Promise<Category[]> {
+        const foundCategories = await this.categoryService.findAllCategories();
+
+        return foundCategories;
     }
 }

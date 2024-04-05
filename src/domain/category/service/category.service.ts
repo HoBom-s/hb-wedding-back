@@ -27,4 +27,8 @@ export class CategoryService {
 
         return createdCategory;
     }
+
+    async findAllCategories(): Promise<Category[]> {
+        return this.categoryRepository.findAllCategories();
+    }
 }
