@@ -3,7 +3,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { TypeOrmConfig } from "src/config/typeorm.config";
 import { CategoryModule } from "src/domain/category/category.module";
-import { CategoryCreateDto } from "src/domain/category/dto/category.dto";
+import { CategoryCreateDto } from "src/domain/category/dto/category-create.dto";
 import { CategoryService } from "src/domain/category/service/category.service";
 
 describe("CategoryService", () => {

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CategoryCreateDto } from "../dto/category.dto";
+import { CategoryCreateDto } from "../dto/category-create.dto";
 import { Category } from "../entity/category.entity";
 import { CategoryRepository } from "../repository/category.repository";
 import { AlreadyExistCategoryError } from "../exceptions/AlreadyExistCategoryError";

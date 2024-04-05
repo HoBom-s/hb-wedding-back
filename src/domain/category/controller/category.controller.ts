@@ -8,7 +8,7 @@ import {
 } from "@nestjs/common";
 import { CategoryService } from "../service/category.service";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { CategoryCreateDto } from "../dto/category.dto";
+import { CategoryCreateDto } from "../dto/category-create.dto";
 import { Category } from "../entity/category.entity";
 import { HttpExceptionFilter } from "src/global/filters/http-exception.filter";
 
