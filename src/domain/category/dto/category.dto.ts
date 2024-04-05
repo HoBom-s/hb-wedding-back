@@ -1,14 +1,24 @@
-import { IsString, IsNumber, IsPositive } from "class-validator";
+import { IsString, IsNumber, IsPositive, IsNotEmpty } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CategoryCreateDto {
     @ApiProperty({ description: "Category's name", example: "New category" })
-    @IsString()
-    name: string;
+    @IsString({
+        message: "Category name must be string !",
+    })
+    @IsNotEmpty({
+        message: "Category name must be defined !",
+    })
+    readonly name: string;
 
     @ApiProperty({ description: "Category's path", example: "path" })
-    @IsString()
-    path: string;
+    @IsString({
+        message: "Category path must be string !",
+    })
+    @IsNotEmpty({
+        message: "Category path must be defined !",
+    })
+    readonly path: string;
 
     @ApiProperty({
         description: "Category's sort count. For Sorting.",
@@ -16,5 +26,6 @@ export class CategoryCreateDto {
     })
     @IsNumber()
     @IsPositive()
-    sortCount: number;
+    @IsNotEmpty({ message: "Category sort count must be defined !" })
+    readonly sortCount: number;
 }
