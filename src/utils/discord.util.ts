@@ -11,7 +11,7 @@ export class DiscordUtil {
 
     async sendDiscordMessage(errMsg: string) {
         const messageBuilder = new MessageBuilder()
-            .setTitle("HBWD Issue Occured !!")
+            .setTitle("😈 HBWD Issue Occured 😈")
             .setAuthor(
                 "HoBom Wedding Error",
                 "https://cdn.discordapp.com/embed/avatars/0.png",

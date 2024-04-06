@@ -21,8 +21,12 @@ async function bootstrap() {
         credentials: true,
     };
 
-    const app = await NestFactory.create(AppModule, { logger: winstonLogger });
+    const app = await NestFactory.create(AppModule, {
+        logger: winstonLogger,
+        cors: corsOptions,
+    });
 
+    app.useGlobalInterceptors(new SentryInterceptor());
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,
@@ -31,9 +35,6 @@ async function bootstrap() {
         }),
     );
     app.useGlobalFilters(new HttpExceptionFilter());
-    app.useGlobalInterceptors(new SentryInterceptor());
-
-    app.enableCors(corsOptions);
 
     const swaggerConfig = new SwaggerConfig(app);
     swaggerConfig.init();
