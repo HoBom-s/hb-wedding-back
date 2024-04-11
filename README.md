@@ -1,1 +1,4 @@
-# HoBom Wedding (WIP)
+# HoBom Wedding
+짜여진 청첩장은 그만 ✋  
+쉽게 내손으로 만드는 청첩장 툴 호봄 웨딩
+
