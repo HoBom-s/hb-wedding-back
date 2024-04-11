@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { TypeOrmConfig } from "./config/typeorm.config";
-import { CategoryModule } from "./domain/category/category.module";
+import { CardsModule } from "./domain/cards/cards.module";
 
 @Module({
     imports: [
@@ -10,7 +10,7 @@ import { CategoryModule } from "./domain/category/category.module";
         TypeOrmModule.forRootAsync({
             useClass: TypeOrmConfig,
         }),
-        CategoryModule,
+        CardsModule,
     ],
     controllers: [],
     providers: [],
