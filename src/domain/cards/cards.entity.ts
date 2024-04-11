@@ -1,19 +1,19 @@
 import { Column, DeleteDateColumn, Entity } from "typeorm";
 import { CommonEntity } from "src/entities/common.entity";
-import { PageDirection } from "src/types/entities/page.type";
+import { CardDirection } from "src/types/entities/card.type";
 
 /**
  * @todo
  * - User 테이블 후 FK 추가
  */
 @Entity()
-export class Page extends CommonEntity {
+export class Card extends CommonEntity {
     @Column({
         type: "enum",
-        enum: PageDirection,
-        default: PageDirection.VERTICAL,
+        enum: CardDirection,
+        default: CardDirection.VERTICAL,
     })
-    direction: PageDirection;
+    direction: CardDirection;
 
     @DeleteDateColumn()
     deleted_at: Date;

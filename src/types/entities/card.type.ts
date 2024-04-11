@@ -1,4 +1,4 @@
-export enum PageDirection {
+export enum CardDirection {
     VERTICAL = "vertical",
     HORIZONTAL = "horizontal",
 }
