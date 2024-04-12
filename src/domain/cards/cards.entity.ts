@@ -6,8 +6,12 @@ import {
     ManyToOne,
 } from "typeorm";
 import { Common } from "src/entities/common.entity";
-import { CardDirection } from "src/types/entities/card.type";
 import { User } from "../users/entity/users.entity";
+
+export enum CardDirection {
+    VERTICAL = "vertical",
+    HORIZONTAL = "horizontal",
+}
 
 @Entity("card")
 export class Card extends Common {
@@ -26,7 +30,7 @@ export class Card extends Common {
     title: string;
 
     @Column({
-        type: "enum",
+        type: "simple-enum",
         enum: CardDirection,
         default: CardDirection.VERTICAL,
     })
