@@ -1,14 +1,14 @@
 import { INestApplication } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { TypeOrmConfig } from "src/config/typeorm.config";
-import { UserRepository } from "src/domain/users/repository/users.repository";
-import { UsersModule } from "src/domain/users/users.module";
 import { EntityManager } from "typeorm";
+import { TypeOrmConfig } from "src/config/typeorm.config";
+import { UsersModule } from "src/domain/users/user.module";
+import { UserService } from "src/domain/users/service/user.service";
 
-describe("UserRepository", () => {
+describe("CategoryService", () => {
     let app: INestApplication;
-    let userRepository: UserRepository;
+    let userService: UserService;
 
     beforeAll(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -25,7 +25,7 @@ describe("UserRepository", () => {
         const entityManager = app.get(EntityManager);
         await entityManager.query("truncate table user;");
 
-        userRepository = module.get(UserRepository);
+        userService = module.get(UserService);
 
         await app.init();
     });
@@ -36,21 +36,21 @@ describe("UserRepository", () => {
 
     it("createUser() & signinUser()", async () => {
         const mockUser = {
-            email: "tester@gmail.com",
-            name: "Tester",
-            nickname: "FoxMon",
+            email: "tester2@gmail.com",
+            name: "Tester2",
+            nickname: "FoxMon2",
             password: "tester123@",
             phoneNumber: "010-1234-1234",
         };
-        const createdUser = await userRepository.createUser(mockUser);
+        const createdUser = await userService.createUser(mockUser);
 
         expect(createdUser.email).toBe(mockUser.email);
 
-        const signinUser = await userRepository.signinUser({
+        const signinUser = await userService.signinUser({
             email: mockUser.email,
             password: mockUser.password,
         });
 
-        expect(signinUser.email).toBe(mockUser.email);
+        expect(signinUser).toBeDefined();
     });
 });
