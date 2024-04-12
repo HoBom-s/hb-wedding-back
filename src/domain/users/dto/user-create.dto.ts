@@ -10,6 +10,9 @@ export class UserCreateDto {
     @IsNotEmpty()
     @Matches(
         /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+        {
+            message: "Please check your email format.",
+        },
     )
     email: string;
 
@@ -35,7 +38,10 @@ export class UserCreateDto {
     })
     @IsString()
     @IsNotEmpty()
-    @Matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/)
+    @Matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/, {
+        message:
+            "The password must be at least 8 characters long, including number & special characters.",
+    })
     password: string;
 
     @ApiProperty({
@@ -44,6 +50,8 @@ export class UserCreateDto {
     })
     @IsString()
     @IsNotEmpty()
-    @Matches(/^\d{3}-\d{3,4}-\d{4}$/)
+    @Matches(/^\d{3}-\d{3,4}-\d{4}$/, {
+        message: "Please check your phone number format.",
+    })
     phoneNumber: string;
 }
