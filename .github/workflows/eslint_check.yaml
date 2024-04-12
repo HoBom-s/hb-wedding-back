@@ -4,7 +4,7 @@ name: ESLint Check
 # 워크플로우가 어떤 이벤트에 반응할지 정의
 on:
   pull_request:
-    branches: [main, dev] # 특정 브랜치로 병합될때만 워크플로우가 실행되도록
+    branches: [dev] # 특정 브랜치로 병합될때만 워크플로우가 실행되도록
 
 # 워크플로우에서 실행할 작업 정의
 jobs:
