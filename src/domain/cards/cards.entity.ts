@@ -1,13 +1,13 @@
-import { Column, DeleteDateColumn, Entity } from "typeorm";
+import { Column, DeleteDateColumn, Entity, ManyToOne } from "typeorm";
 import { Common } from "src/entities/common.entity";
 import { CardDirection } from "src/types/entities/card.type";
+import { User } from "../users/entity/users.entity";
 
-/**
- * @todo
- * - User 테이블 후 FK 추가
- */
-@Entity()
+@Entity("card")
 export class Card extends Common {
+    @ManyToOne(() => User)
+    user: User;
+
     @Column({
         type: "enum",
         enum: CardDirection,
