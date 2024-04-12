@@ -1,5 +1,5 @@
 import { Column, DeleteDateColumn, Entity } from "typeorm";
-import { CommonEntity } from "src/entities/common.entity";
+import { Common } from "src/entities/common.entity";
 import { CardDirection } from "src/types/entities/card.type";
 
 /**
@@ -7,7 +7,7 @@ import { CardDirection } from "src/types/entities/card.type";
  * - User 테이블 후 FK 추가
  */
 @Entity()
-export class Card extends CommonEntity {
+export class Card extends Common {
     @Column({
         type: "enum",
         enum: CardDirection,

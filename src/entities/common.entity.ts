@@ -4,7 +4,7 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 
-export abstract class CommonEntity {
+export abstract class Common {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 

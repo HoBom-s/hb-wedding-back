@@ -1,8 +1,8 @@
-import { CommonEntity } from "src/entities/common.entity";
+import { Common } from "src/entities/common.entity";
 import { Column, DeleteDateColumn, Entity } from "typeorm";
 
 @Entity("user")
-export class User extends CommonEntity {
+export class User extends Common {
     @Column({
         type: "varchar",
         unique: true,
