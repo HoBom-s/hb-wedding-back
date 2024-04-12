@@ -20,9 +20,7 @@ export class UserService {
         );
 
         if (alreadyFoundUser) {
-            throw new AlreadyExistUserException(
-                `The user already exist ! ${userCreateRequest.email}`,
-            );
+            throw new AlreadyExistUserException();
         }
 
         const encodedPassword: string = await BcryptHelper.encode(
@@ -50,7 +48,7 @@ export class UserService {
         const foundUser = await this.userRepository.signinUser(userSigninDto);
 
         if (!foundUser) {
-            throw new CannotFindUserException("Cannot find user !");
+            throw new CannotFindUserException();
         }
 
         const isEqual: boolean = await BcryptHelper.decode(
@@ -59,7 +57,7 @@ export class UserService {
         );
 
         if (!isEqual) {
-            throw new CannotFindUserException("Cannot find user !");
+            throw new CannotFindUserException();
         }
 
         return foundUser.id;

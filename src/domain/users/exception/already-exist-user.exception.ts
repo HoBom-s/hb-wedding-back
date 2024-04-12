@@ -1,5 +1,7 @@
-export class AlreadyExistUserException extends Error {
-    constructor(msg: string) {
-        super(msg);
+import { BaseException } from "src/exceptions/base.exception";
+
+export class AlreadyExistUserException extends BaseException {
+    constructor() {
+        super("Alreay exist user !", "Alreay exist user !", 400);
     }
 }

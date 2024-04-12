@@ -1,9 +1,7 @@
-import { winstonLogger } from "src/utils/winston.util";
+import { BaseException } from "src/exceptions/base.exception";
 
-export class CannotFindUserException extends Error {
-    constructor(msg: string) {
-        super(msg);
-
-        winstonLogger.error("Cannot find user !");
+export class CannotFindUserException extends BaseException {
+    constructor() {
+        super("Cannot find user !", "Cannot find user !", 400);
     }
 }

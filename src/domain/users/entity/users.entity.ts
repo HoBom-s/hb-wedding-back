@@ -11,7 +11,6 @@ export class User extends CommonEntity {
 
     @Column({
         type: "varchar",
-        length: 15,
     })
     password: string;
 
