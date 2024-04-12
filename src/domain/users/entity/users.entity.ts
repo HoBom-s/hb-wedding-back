@@ -1,7 +1,7 @@
 import { CommonEntity } from "src/entities/common.entity";
 import { Column, DeleteDateColumn, Entity } from "typeorm";
 
-@Entity()
+@Entity("user")
 export class User extends CommonEntity {
     @Column({
         type: "varchar",
@@ -11,6 +11,7 @@ export class User extends CommonEntity {
 
     @Column({
         type: "varchar",
+        length: 15,
     })
     password: string;
 
@@ -27,8 +28,8 @@ export class User extends CommonEntity {
     @Column({
         type: "varchar",
     })
-    phone_number: string;
+    phoneNumber: string;
 
     @DeleteDateColumn()
-    deleted_at: Date;
+    deletedAt: Date;
 }

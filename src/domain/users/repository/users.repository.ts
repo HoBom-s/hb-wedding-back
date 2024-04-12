@@ -17,9 +17,13 @@ export class UserRepository {
     }
 
     async signinUser(userSigninDto: UserSigninDto): Promise<User> {
+        return this.findByEmail(userSigninDto.email);
+    }
+
+    async findByEmail(email: string): Promise<User> {
         return this.userRepository.findOne({
             where: {
-                email: userSigninDto.email,
+                email: email,
             },
         });
     }

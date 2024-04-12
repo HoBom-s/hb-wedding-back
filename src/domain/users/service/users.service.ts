@@ -6,6 +6,7 @@ import { UserCreateResponseDto } from "../dto/user-create-response.dto";
 import { BcryptHelper } from "src/helpers/bcrypt.helper";
 import { UserSigninDto } from "../dto/user-signin.dto";
 import { CannotFindUserException } from "../exception/cannot-find-user.exception";
+import { AlreadyExistUserException } from "../exception/already-exist-user.exception";
 
 @Injectable()
 export class UserService {
@@ -14,6 +15,16 @@ export class UserService {
     async createUser(
         userCreateRequest: UserCreateDto,
     ): Promise<UserCreateResponseDto> {
+        const alreadyFoundUser: User = await this.userRepository.findByEmail(
+            userCreateRequest.email,
+        );
+
+        if (alreadyFoundUser) {
+            throw new AlreadyExistUserException(
+                `The user already exist ! ${userCreateRequest.email}`,
+            );
+        }
+
         const encodedPassword: string = await BcryptHelper.encode(
             userCreateRequest.password,
         );
@@ -29,7 +40,7 @@ export class UserService {
                 craetedUser.email,
                 craetedUser.name,
                 craetedUser.nickname,
-                craetedUser.phone_number,
+                craetedUser.phoneNumber,
             );
 
         return createUserResponse;

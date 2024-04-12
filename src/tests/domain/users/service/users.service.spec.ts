@@ -40,7 +40,7 @@ describe("CategoryService", () => {
             name: "Tester2",
             nickname: "FoxMon2",
             password: "tester123@",
-            phone_number: "010-1234-1234",
+            phoneNumber: "010-1234-1234",
         };
         const createdUser = await userService.createUser(mockUser);
 

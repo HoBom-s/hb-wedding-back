@@ -45,5 +45,5 @@ export class UserCreateDto {
     @IsString()
     @IsNotEmpty()
     @Matches(/^\d{3}-\d{3,4}-\d{4}$/)
-    phone_number: string;
+    phoneNumber: string;
 }

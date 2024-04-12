@@ -5,7 +5,7 @@ export class UserCreateResponseDto {
 
     readonly name: string;
 
-    readonly ninckname: string;
+    readonly nickname: string;
 
     readonly phone_number: string;
 
@@ -19,7 +19,7 @@ export class UserCreateResponseDto {
         this.id = id;
         this.email = email;
         this.name = name;
-        this.ninckname = nickname;
+        this.nickname = nickname;
         this.phone_number = phone_number;
     }
 }

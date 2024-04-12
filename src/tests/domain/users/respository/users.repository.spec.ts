@@ -40,7 +40,7 @@ describe("UserRepository", () => {
             name: "Tester",
             nickname: "FoxMon",
             password: "tester123@",
-            phone_number: "010-1234-1234",
+            phoneNumber: "010-1234-1234",
         };
         const createdUser = await userRepository.createUser(mockUser);
 
