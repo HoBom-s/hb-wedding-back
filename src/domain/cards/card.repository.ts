@@ -1,25 +1,37 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Card } from "./card.entity";
-import { Repository } from "typeorm";
+import { DeleteResult, Repository, UpdateResult } from "typeorm";
 import { CardCreateDto } from "./dto/card-create.dto";
+import { CardUpdateDto } from "./dto/card-update.dto";
 
 @Injectable()
 export class CardRepository {
     constructor(
         @InjectRepository(Card)
-        private readonly CardsRepository: Repository<Card>,
+        private readonly card: Repository<Card>,
     ) {}
 
-    async getOneCard(id: string) {
-        await this.CardsRepository.findOneBy({ id });
+    async getOneCard(id: string): Promise<Card> {
+        return this.card.findOneBy({ id });
     }
 
-    async getAllCardsByUser(userId: string) {
-        await this.CardsRepository.findBy({ userId });
+    async getAllCardsByUser(userId: string): Promise<Card[]> {
+        return this.card.findBy({ userId });
     }
 
-    async createCard(cardCreateRequest: CardCreateDto) {
-        return this.CardsRepository.save(cardCreateRequest);
+    async createCard(cardCreateRequest: CardCreateDto): Promise<Card> {
+        return this.card.save(cardCreateRequest);
+    }
+
+    async updateCard(
+        id: string,
+        cardUpdateDto: CardUpdateDto,
+    ): Promise<UpdateResult> {
+        return this.card.update(id, cardUpdateDto);
+    }
+
+    async removeCard(id: string): Promise<DeleteResult> {
+        return this.card.delete(id);
     }
 }
