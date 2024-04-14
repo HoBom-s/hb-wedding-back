@@ -12,12 +12,12 @@ export class CardRepository {
         private readonly card: Repository<Card>,
     ) {}
 
-    async getOneCard(id: string): Promise<Card> {
-        return this.card.findOneBy({ id });
-    }
-
     async getAllCardsByUser(userId: string): Promise<Card[]> {
         return this.card.findBy({ userId });
+    }
+
+    async getOneCardById(id: string): Promise<Card> {
+        return this.card.findOneBy({ id });
     }
 
     async createCard(cardCreateRequest: CardCreateDto): Promise<Card> {
