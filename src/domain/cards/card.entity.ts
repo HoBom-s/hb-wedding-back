@@ -33,6 +33,7 @@ export class Card extends Common {
         type: "simple-enum",
         enum: CardDirection,
         default: CardDirection.VERTICAL,
+        nullable: false,
     })
     direction: CardDirection;
 

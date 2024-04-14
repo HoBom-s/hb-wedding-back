@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Card } from "./card.entity";
 import { Repository } from "typeorm";
+import { CardCreateDto } from "./dto/card-create.dto";
 
 @Injectable()
 export class CardRepository {
@@ -18,10 +19,7 @@ export class CardRepository {
         await this.CardsRepository.findBy({ userId });
     }
 
-    /**
-     * @Todo @robinyeon
-     */
-    // async createCard(cardCreateRequest) {
-    //     return this.CardsRepository.save(cardCreateRequest);
-    // }
+    async createCard(cardCreateRequest: CardCreateDto) {
+        return this.CardsRepository.save(cardCreateRequest);
+    }
 }
