@@ -35,7 +35,7 @@ export class Card extends Common {
         default: CardDirection.VERTICAL,
         nullable: false,
     })
-    direction: CardDirection;
+    direction: CardDirection.HORIZONTAL | CardDirection.VERTICAL;
 
     @DeleteDateColumn()
     deletedAt: Date;

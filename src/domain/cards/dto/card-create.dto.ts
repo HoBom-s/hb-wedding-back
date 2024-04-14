@@ -5,6 +5,10 @@ import { CardDirection } from "../card.entity";
 export class CardCreateDto {
     @IsNotEmpty()
     @IsString()
+    userId: string;
+
+    @IsNotEmpty()
+    @IsString()
     title: string;
 
     @IsNotEmpty()
@@ -12,5 +16,5 @@ export class CardCreateDto {
     @IsEnum(CardDirection, {
         message: "Direction should be either vertical or horizontal.",
     })
-    direction: CardDirection;
+    direction: CardDirection.HORIZONTAL | CardDirection.VERTICAL;
 }
