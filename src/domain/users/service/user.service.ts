@@ -45,7 +45,9 @@ export class UserService {
     }
 
     async signinUser(userSigninDto: UserSigninDto): Promise<string> {
-        const foundUser = await this.userRepository.signinUser(userSigninDto);
+        const foundUser = await this.userRepository.findByEmail(
+            userSigninDto.email,
+        );
 
         if (!foundUser) {
             throw new CannotFindUserException();
@@ -60,6 +62,6 @@ export class UserService {
             throw new CannotFindUserException();
         }
 
-        return foundUser.id;
+        return foundUser.email;
     }
 }
