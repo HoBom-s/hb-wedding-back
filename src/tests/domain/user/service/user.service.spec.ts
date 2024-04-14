@@ -3,7 +3,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";
 import { TypeOrmConfig } from "src/config/typeorm.config";
-import { UsersModule } from "src/domain/users/user.module";
+import { UserModule } from "src/domain/users/user.module";
 import { UserService } from "src/domain/users/service/user.service";
 
 describe("CategoryService", () => {
@@ -16,7 +16,7 @@ describe("CategoryService", () => {
                 TypeOrmModule.forRootAsync({
                     useClass: TypeOrmConfig,
                 }),
-                UsersModule,
+                UserModule,
             ],
         }).compile();
 
