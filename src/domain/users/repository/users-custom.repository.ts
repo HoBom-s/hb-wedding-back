@@ -17,16 +17,4 @@ export class UserCustomRepository {
     public async findByEmail(email: string): Promise<User> {
         return this.user.findOneBy({ email });
     }
-
-    public async findByEmailAndPassword(
-        email: string,
-        password: string,
-    ): Promise<User> {
-        return this.user.findOne({
-            where: {
-                email,
-                password,
-            },
-        });
-    }
 }
