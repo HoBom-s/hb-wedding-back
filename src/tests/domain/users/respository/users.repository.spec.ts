@@ -46,10 +46,7 @@ describe("UserRepository", () => {
 
         expect(createdUser.email).toBe(mockUser.email);
 
-        const signinUser = await userRepository.signinUser({
-            email: mockUser.email,
-            password: mockUser.password,
-        });
+        const signinUser = await userRepository.findByEmail(mockUser.email);
 
         expect(signinUser.email).toBe(mockUser.email);
     });
