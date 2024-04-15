@@ -1,4 +1,4 @@
-import { Common } from "src/entities/common.entity";
+import { Common } from "src/common/entities/common.entity";
 import { Column, DeleteDateColumn, Entity } from "typeorm";
 
 @Entity("user")

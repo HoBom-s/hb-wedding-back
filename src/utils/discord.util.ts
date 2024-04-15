@@ -1,6 +1,6 @@
 import { Webhook, MessageBuilder } from "discord-webhook-node";
 import { GLOBAL_ENV } from "src/config/global.env.config";
-import { DiscordSendMessageException } from "src/exceptions/discord-send-message.exception";
+import { DiscordSendMessageException } from "src/common/exceptions/discord-send-message.exception";
 
 export class DiscordUtil {
     private hook: Webhook;

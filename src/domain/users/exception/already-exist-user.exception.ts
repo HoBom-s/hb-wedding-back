@@ -1,4 +1,4 @@
-import { BaseException } from "src/exceptions/base.exception";
+import { BaseException } from "src/common/exceptions/base.exception";
 
 export class AlreadyExistUserException extends BaseException {
     constructor() {

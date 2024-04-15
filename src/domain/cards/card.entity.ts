@@ -5,7 +5,7 @@ import {
     JoinColumn,
     ManyToOne,
 } from "typeorm";
-import { Common } from "src/entities/common.entity";
+import { Common } from "src/common/entities/common.entity";
 import { User } from "../users/entity/user.entity";
 
 export enum CardDirection {
