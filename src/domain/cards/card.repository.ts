@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Card } from "./card.entity";
 import { DeleteResult, Repository, UpdateResult } from "typeorm";
-import { CardCreateDto } from "./dto/card-create.dto";
-import { CardUpdateDto } from "./dto/card-update.dto";
+import { CardCreateDto } from "./dtos/card-create.dto";
+import { CardUpdateDto } from "./dtos/card-update.dto";
 
 @Injectable()
 export class CardRepository {
@@ -18,6 +18,10 @@ export class CardRepository {
 
     async getOneCardById(id: string): Promise<Card> {
         return this.card.findOneBy({ id });
+    }
+
+    async getOneCardByTitle(title: string): Promise<Card> {
+        return this.card.findOneBy({ title });
     }
 
     async createCard(cardCreateRequest: CardCreateDto): Promise<Card> {
