@@ -1,8 +1,12 @@
-import { Injectable } from "@nestjs/common";
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException,
+} from "@nestjs/common";
 import { CardRepository } from "./card.repository";
 import { Card } from "./card.entity";
-import { CardCreateDto } from "./dto/card-create.dto";
-import { CardUpdateDto } from "./dto/card-update.dto";
+import { CardCreateDto } from "./dtos/card-create.dto";
+import { CardUpdateDto } from "./dtos/card-update.dto";
 import { DeleteResult } from "typeorm";
 
 @Injectable()
@@ -16,12 +20,17 @@ export class CardService {
     async getOneCardById(id: string): Promise<Card> {
         const foundCard = await this.cardRepository.getOneCardById(id);
 
-        if (!foundCard) throw new Error("Card not found");
+        if (!foundCard) throw new NotFoundException("Card not found.");
 
         return foundCard;
     }
 
     async createCard(cardCreateRequest: CardCreateDto): Promise<Card> {
+        const foundCard = this.cardRepository.getOneCardByTitle(
+            cardCreateRequest.title,
+        );
+        if (foundCard) throw new ConflictException("Card already exists.");
+
         return this.cardRepository.createCard(cardCreateRequest);
     }
 
