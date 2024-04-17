@@ -3,8 +3,8 @@ import { BadRequestException, ValidationPipe } from "@nestjs/common";
 import * as Sentry from "@sentry/node";
 import { GLOBAL_ENV } from "./config/global.env.config";
 import { SwaggerConfig } from "./config/swagger.config";
-import { SentryInterceptor } from "./global/interceptors/sentry.interceptor";
-import { HttpExceptionFilter } from "./global/filters/http-exception.filter";
+import { SentryInterceptor } from "./common/interceptors/sentry.interceptor";
+import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
 import { AppModule } from "./app.module";
 import { winstonLogger } from "./utils/winston.util";
 
