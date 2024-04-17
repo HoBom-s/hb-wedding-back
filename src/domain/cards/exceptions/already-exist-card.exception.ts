@@ -1,11 +1,11 @@
 import { HttpStatus } from "@nestjs/common";
 import { BaseException } from "src/common/exceptions/base.exception";
 
-export class AlreadyExistUserException extends BaseException {
+export class AlreadyExistCardException extends BaseException {
     constructor() {
         super(
-            "Alreay exist user !",
-            "Alreay exist user !",
+            "Alreay exist card !",
+            "Alreay exist card !",
             HttpStatus.CONFLICT,
         );
     }

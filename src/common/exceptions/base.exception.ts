@@ -1,15 +1,10 @@
-import { HttpException } from "@nestjs/common";
+import { HttpException, HttpStatus } from "@nestjs/common";
 
-/**
- * @Todo @robinyeon
- * - BaseException 보완
- */
 export class BaseException extends HttpException {
     msg: string;
 
-    constructor(msg: string, errorCode: string, statusCode: number) {
+    constructor(msg: string, errorCode: string, statusCode: HttpStatus) {
         super(errorCode, statusCode);
-
         this.msg = msg;
     }
 }
