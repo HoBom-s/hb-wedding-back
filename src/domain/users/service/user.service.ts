@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "../entity/user.entity";
-import { UserRepository } from "../repository/user.repository";
+import { UserRepository } from "../repositories/user.repository";
 import { UserCreateDto } from "../dtos/user-create.dto";
 import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
 import { BcryptHelper } from "src/helpers/bcrypt.helper";
@@ -27,18 +27,18 @@ export class UserService {
             userCreateRequest.password,
         );
 
-        const craetedUser: User = await this.userRepository.createUser({
+        const createdUser: User = await this.userRepository.createUser({
             ...userCreateRequest,
             password: encodedPassword,
         });
 
         const createUserResponse: UserCreateResponseDto =
             new UserCreateResponseDto(
-                craetedUser.id,
-                craetedUser.email,
-                craetedUser.name,
-                craetedUser.nickname,
-                craetedUser.phoneNumber,
+                createdUser.id,
+                createdUser.email,
+                createdUser.name,
+                createdUser.nickname,
+                createdUser.phoneNumber,
             );
 
         return createUserResponse;

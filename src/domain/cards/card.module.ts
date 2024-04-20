@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Card } from "./card.entity";
-import { CardRepository } from "./card.repository";
+import { CardRepository } from "./repositories/card.repository";
 import { UserModule } from "../users/user.module";
 
 @Module({
