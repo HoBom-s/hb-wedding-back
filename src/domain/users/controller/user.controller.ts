@@ -1,9 +1,9 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserService } from "../service/user.service";
-import { UserCreateDto } from "../dto/user-create.dto";
-import { UserCreateResponseDto } from "../dto/user-create-response.dto";
-import { UserSigninDto } from "../dto/user-signin.dto";
+import { UserCreateDto } from "../dtos/user-create.dto";
+import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
+import { UserSigninDto } from "../dtos/user-signin.dto";
 
 @Controller("/api/v1/users")
 @ApiTags("User API")

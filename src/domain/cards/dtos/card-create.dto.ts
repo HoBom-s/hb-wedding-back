@@ -16,7 +16,7 @@ export class CardCreateDto {
 
     @ApiProperty({ enum: ["vertical", "horizontal"] })
     @IsNotEmpty()
-    @Transform(({ value }) => value.toLowerCase())
+    @Transform(({ value }) => value.trim().toLowerCase())
     @IsEnum(CardDirection, {
         message: "Direction should be either vertical or horizontal.",
     })

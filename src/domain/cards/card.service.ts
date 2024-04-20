@@ -33,10 +33,10 @@ export class CardService {
     }
 
     async updateCard(id: string, cardUpdateDto: CardUpdateDto): Promise<Card> {
-        await this.cardRepository.updateCard(id, cardUpdateDto);
-
-        const updatedCard = await this.getOneCardById(id);
-
+        const [_, updatedCard] = await Promise.all([
+            this.cardRepository.updateCard(id, cardUpdateDto),
+            this.getOneCardById(id),
+        ]);
         return updatedCard;
     }
 
