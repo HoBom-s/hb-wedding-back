@@ -7,10 +7,14 @@ import { BcryptHelper } from "src/helpers/bcrypt.helper";
 import { UserSigninDto } from "../dtos/user-signin.dto";
 import { CannotFindUserException } from "../exceptions/cannot-find-user.exception";
 import { AlreadyExistUserException } from "../exceptions/already-exist-user.exception";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class UserService {
-    constructor(private readonly userRepository: UserRepository) {}
+    constructor(
+        private readonly userRepository: UserRepository,
+        private jwtService: JwtService,
+    ) {}
 
     async createUser(
         userCreateRequest: UserCreateDto,
@@ -44,7 +48,7 @@ export class UserService {
         return createUserResponse;
     }
 
-    async signinUser(userSigninDto: UserSigninDto): Promise<string> {
+    async signinUser(userSigninDto: UserSigninDto) {
         const foundUser = await this.userRepository.findByEmail(
             userSigninDto.email,
         );
@@ -62,6 +66,8 @@ export class UserService {
             throw new CannotFindUserException();
         }
 
-        return foundUser.email;
+        const payload = { email: foundUser.email };
+        const accessToken = await this.jwtService.signAsync(payload);
+        return { accessToken };
     }
 }

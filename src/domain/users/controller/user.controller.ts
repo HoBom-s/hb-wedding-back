@@ -40,9 +40,8 @@ export class UserController {
     })
     @Post("/signin")
     async signinUser(@Body() signinRequest: UserSigninDto) {
-        const foundeUser: string =
-            await this.userService.signinUser(signinRequest);
+        const accessToken = await this.userService.signinUser(signinRequest);
 
-        return foundeUser;
+        return accessToken;
     }
 }
