@@ -22,4 +22,20 @@ export class UserCreateResponseDto {
         this.nickname = nickname;
         this.phone_number = phone_number;
     }
+
+    static of({
+        id,
+        email,
+        name,
+        nickname,
+        phoneNumber,
+    }): UserCreateResponseDto {
+        return new UserCreateResponseDto(
+            id,
+            email,
+            name,
+            nickname,
+            phoneNumber,
+        );
+    }
 }

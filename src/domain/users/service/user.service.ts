@@ -13,7 +13,7 @@ import { JwtService } from "@nestjs/jwt";
 export class UserService {
     constructor(
         private readonly userRepository: UserRepository,
-        private jwtService: JwtService,
+        private readonly jwtService: JwtService,
     ) {}
 
     async createUser(
@@ -37,13 +37,7 @@ export class UserService {
         });
 
         const createUserResponse: UserCreateResponseDto =
-            new UserCreateResponseDto(
-                createdUser.id,
-                createdUser.email,
-                createdUser.name,
-                createdUser.nickname,
-                createdUser.phoneNumber,
-            );
+            UserCreateResponseDto.of(createdUser);
 
         return createUserResponse;
     }
