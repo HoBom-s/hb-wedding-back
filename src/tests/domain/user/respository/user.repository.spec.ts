@@ -2,7 +2,7 @@ import { INestApplication } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { TypeOrmConfig } from "src/config/typeorm.config";
-import { UserRepository } from "src/domain/users/repository/user.repository";
+import { UserRepository } from "src/domain/users/repositories/user.repository";
 import { UserModule } from "src/domain/users/user.module";
 import { EntityManager } from "typeorm";
 

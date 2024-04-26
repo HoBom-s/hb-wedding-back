@@ -20,4 +20,9 @@ export const GLOBAL_ENV = {
     MYSQL_HOST: process.env.MYSQL_HOST,
     MYSQL_PORT: process.env.MYSQL_PORT,
     MYSQL_DATABASE: process.env.MYSQL_DATABASE,
+    REDIS_USERNAME: process.env.REDIS_USERNAME,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+    REDIS_HOST: process.env.REDIS_HOST,
+    REDIS_PORT: process.env.REDIS_PORT,
+    JWT_SECRET: process.env.JWT_SECRET,
 };

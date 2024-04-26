@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CardRepository } from "./card.repository";
+import { CardRepository } from "./repositories/card.repository";
 import { Card } from "./card.entity";
 import { CardCreateDto } from "./dtos/card-create.dto";
 import { CardUpdateDto } from "./dtos/card-update.dto";
@@ -16,7 +16,7 @@ export class CardService {
     }
 
     async getOneCardById(id: string): Promise<Card> {
-        const foundCard = await this.cardRepository.getOneCardById(id);
+        const foundCard = await this.cardRepository.getOneCardBy("id", id);
 
         if (!foundCard) throw new CannotFindCardException();
 
@@ -24,7 +24,8 @@ export class CardService {
     }
 
     async createCard(cardCreateRequest: CardCreateDto): Promise<Card> {
-        const foundCard = this.cardRepository.getOneCardByTitle(
+        const foundCard = this.cardRepository.getOneCardBy(
+            "title",
             cardCreateRequest.title,
         );
         if (foundCard) throw new AlreadyExistCardException();
@@ -33,10 +34,10 @@ export class CardService {
     }
 
     async updateCard(id: string, cardUpdateDto: CardUpdateDto): Promise<Card> {
-        await this.cardRepository.updateCard(id, cardUpdateDto);
-
-        const updatedCard = await this.getOneCardById(id);
-
+        const [_, updatedCard] = await Promise.all([
+            this.cardRepository.updateCard(id, cardUpdateDto),
+            this.getOneCardById(id),
+        ]);
         return updatedCard;
     }
 
