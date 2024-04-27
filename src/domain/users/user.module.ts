@@ -6,6 +6,8 @@ import { UserService } from "./service/user.service";
 import { UserController } from "./controller/user.controller";
 import { JwtModule } from "@nestjs/jwt";
 import { GLOBAL_ENV } from "src/config/global.env.config";
+import { UserBaseService } from "./service/user-base.service";
+import { UserBaseRepository } from "./repositories/user-base.repository";
 
 @Module({
     imports: [
@@ -16,8 +18,17 @@ import { GLOBAL_ENV } from "src/config/global.env.config";
             signOptions: { expiresIn: "60s" },
         }),
     ],
-    providers: [UserRepository, UserService],
+    providers: [
+        {
+            provide: UserBaseRepository,
+            useClass: UserRepository,
+        },
+        {
+            provide: UserBaseService,
+            useClass: UserService,
+        },
+    ],
     controllers: [UserController],
-    exports: [UserRepository, UserService],
+    exports: [UserBaseRepository, UserBaseService],
 })
 export class UserModule {}

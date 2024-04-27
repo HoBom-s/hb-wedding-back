@@ -1,6 +1,5 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { User } from "../entity/user.entity";
-import { UserRepository } from "../repositories/user.repository";
 import { UserCreateDto } from "../dtos/user-create.dto";
 import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
 import { BcryptHelper } from "src/helpers/bcrypt.helper";
@@ -8,12 +7,15 @@ import { UserSigninDto } from "../dtos/user-signin.dto";
 import { CannotFindUserException } from "../exceptions/cannot-find-user.exception";
 import { AlreadyExistUserException } from "../exceptions/already-exist-user.exception";
 import { JwtService } from "@nestjs/jwt";
+import { UserBaseRepository } from "../repositories/user-base.repository";
+import { UserBaseService } from "./user-base.service";
 
 @Injectable()
-export class UserService {
+export class UserService implements UserBaseService {
     constructor(
-        private readonly userRepository: UserRepository,
-        private jwtService: JwtService,
+        @Inject(UserBaseRepository)
+        private readonly userRepository: UserBaseRepository,
+        private readonly jwtService: JwtService,
     ) {}
 
     async createUser(
@@ -37,18 +39,14 @@ export class UserService {
         });
 
         const createUserResponse: UserCreateResponseDto =
-            new UserCreateResponseDto(
-                createdUser.id,
-                createdUser.email,
-                createdUser.name,
-                createdUser.nickname,
-                createdUser.phoneNumber,
-            );
+            UserCreateResponseDto.of(createdUser);
 
         return createUserResponse;
     }
 
-    async signinUser(userSigninDto: UserSigninDto) {
+    async signinUser(
+        userSigninDto: UserSigninDto,
+    ): Promise<{ accessToken: string }> {
         const foundUser = await this.userRepository.findByEmail(
             userSigninDto.email,
         );
@@ -68,6 +66,7 @@ export class UserService {
 
         const payload = { email: foundUser.email };
         const accessToken = await this.jwtService.signAsync(payload);
+
         return { accessToken };
     }
 }
