@@ -4,13 +4,13 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 
-export abstract class CommonEntity {
+export abstract class Common {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
     @CreateDateColumn()
-    created_at: Date;
+    createdAt: Date;
 
     @UpdateDateColumn()
-    updated_at: Date;
+    updatedAt: Date;
 }
