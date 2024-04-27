@@ -1,6 +1,5 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { User } from "../entity/user.entity";
-import { UserRepository } from "../repositories/user.repository";
 import { UserCreateDto } from "../dtos/user-create.dto";
 import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
 import { BcryptHelper } from "src/helpers/bcrypt.helper";
@@ -8,11 +7,14 @@ import { UserSigninDto } from "../dtos/user-signin.dto";
 import { CannotFindUserException } from "../exceptions/cannot-find-user.exception";
 import { AlreadyExistUserException } from "../exceptions/already-exist-user.exception";
 import { JwtService } from "@nestjs/jwt";
+import { UserBaseRepository } from "../repositories/user-base.repository";
+import { UserBaseService } from "./user-base.service";
 
 @Injectable()
-export class UserService {
+export class UserService implements UserBaseService {
     constructor(
-        private readonly userRepository: UserRepository,
+        @Inject(UserBaseRepository)
+        private readonly userRepository: UserBaseRepository,
         private readonly jwtService: JwtService,
     ) {}
 
@@ -42,7 +44,9 @@ export class UserService {
         return createUserResponse;
     }
 
-    async signinUser(userSigninDto: UserSigninDto) {
+    async signinUser(
+        userSigninDto: UserSigninDto,
+    ): Promise<{ accessToken: string }> {
         const foundUser = await this.userRepository.findByEmail(
             userSigninDto.email,
         );
@@ -62,6 +66,7 @@ export class UserService {
 
         const payload = { email: foundUser.email };
         const accessToken = await this.jwtService.signAsync(payload);
+
         return { accessToken };
     }
 }

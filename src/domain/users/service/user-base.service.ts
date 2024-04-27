@@ -7,5 +7,7 @@ export interface UserBaseService {
         userCreateRequest: UserCreateDto,
     ): Promise<UserCreateResponseDto>;
 
-    signinUser(userSigninDto: UserSigninDto): Promise<string>;
+    signinUser(userSigninDto: UserSigninDto): Promise<{ accessToken: string }>;
 }
+
+export const UserBaseService = Symbol("UesrBaseService");
