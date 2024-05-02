@@ -15,7 +15,7 @@ import { UserBaseRepository } from "./repositories/user-base.repository";
         JwtModule.register({
             global: true,
             secret: GLOBAL_ENV.JWT_SECRET,
-            signOptions: { expiresIn: "60s" },
+            signOptions: { expiresIn: GLOBAL_ENV.JWT_EXP },
         }),
     ],
     providers: [

@@ -25,4 +25,5 @@ export const GLOBAL_ENV = {
     REDIS_HOST: process.env.REDIS_HOST,
     REDIS_PORT: process.env.REDIS_PORT,
     JWT_SECRET: process.env.JWT_SECRET,
+    JWT_EXP: process.env.JWT_EXP,
 };
