@@ -5,7 +5,7 @@ import { BaseException } from "src/common/exceptions/base.exception";
 export class AlreadyExistCardException extends BaseException {
     constructor() {
         super(
-            "Alreay exist card !",
+            "Alreay existing card !",
             CardErrorEnum.ALREADY_EXIST,
             HttpStatus.CONFLICT,
         );
