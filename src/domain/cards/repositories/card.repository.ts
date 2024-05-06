@@ -4,15 +4,21 @@ import { DeleteResult, UpdateResult } from "typeorm";
 import { CardCreateDto } from "../dtos/card-create.dto";
 import { CardUpdateDto } from "../dtos/card-update.dto";
 import { CardCustomRepository } from "./card-custom.repository";
+import { User } from "src/domain/users/entity/user.entity";
 
 @Injectable()
 export class CardRepository extends CardCustomRepository {
     async getAllCardsByUser(userId: string): Promise<Card[]> {
-        return this.card.findBy({ user: { id: userId } });
+        return this.card.findBy({
+            user: { id: userId },
+        });
     }
 
-    async createCard(cardCreateRequest: CardCreateDto): Promise<Card> {
-        return this.card.save(cardCreateRequest);
+    async createCard(
+        cardCreateRequest: CardCreateDto,
+        foundUser: User,
+    ): Promise<Card> {
+        return this.card.save({ ...cardCreateRequest, user: foundUser });
     }
 
     async updateCard(
@@ -23,6 +29,6 @@ export class CardRepository extends CardCustomRepository {
     }
 
     async removeCard(id: string): Promise<DeleteResult> {
-        return this.card.delete(id);
+        return this.card.softDelete(id);
     }
 }

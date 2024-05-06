@@ -23,21 +23,17 @@ import {
     ApiTags,
 } from "@nestjs/swagger";
 import { AuthGuard } from "src/common/guards/auth.guard";
-import { RedisHelper } from "src/helpers/redis.helper";
-import { InvalidUserException } from "../users/exceptions/invalid-user.exception";
 
 @ApiTags("Card API")
 @Controller("/api/v1/cards")
 export class CardController {
-    constructor(
-        private readonly cardService: CardService,
-        private readonly redisHelper: RedisHelper,
-    ) {}
+    constructor(private readonly cardService: CardService) {}
 
     @UseGuards(AuthGuard)
     @Get("/")
     async getAllCardsByUser(@Request() req): Promise<Card[]> {
         const userId = req.user;
+
         const foundCards = await this.cardService.getAllCardsByUser(userId);
 
         return foundCards;
@@ -61,13 +57,19 @@ export class CardController {
         description: "The card has been successfully created.",
         type: Card,
     })
-    async createCard(@Body() cardCreateRequest: CardCreateDto): Promise<Card> {
-        const userEmail = req.user;
-        const createdCard =
-            await this.cardService.createCard(cardCreateRequest);
+    async createCard(
+        @Request() req,
+        @Body() cardCreateRequest: CardCreateDto,
+    ): Promise<Card> {
+        const userId = req.user;
+        const createdCard = await this.cardService.createCard(
+            userId,
+            cardCreateRequest,
+        );
         return createdCard;
     }
 
+    @UseGuards(AuthGuard)
     @Patch("/:id")
     @ApiOperation({ summary: "Update the card." })
     @ApiParam({ name: "id" })
@@ -77,21 +79,29 @@ export class CardController {
         type: Card,
     })
     async updateCard(
+        @Request() req,
         @Param("id") id: string,
         @Body() cardUpdateRequest: CardUpdateDto,
     ): Promise<Card> {
-        const updatedCard = await this.updateCard(id, cardUpdateRequest);
+        const userId = req.user;
+        const updatedCard = await this.cardService.updateCard(
+            id,
+            cardUpdateRequest,
+            userId,
+        );
         return updatedCard;
     }
 
+    @UseGuards(AuthGuard)
     @Delete("/:id")
     @ApiOperation({ summary: "Delete the card." })
     @ApiParam({ name: "id" })
     @ApiOkResponse({
         description: "The card has been successfully deleted.",
     })
-    async removeCard(@Param("id") id: string) {
-        await this.cardService.removeCard(id);
+    async removeCard(@Request() req, @Param("id") id: string) {
+        const userId = req.user;
+        await this.cardService.removeCard(id, userId);
         return { message: "Card successfully deleted." };
     }
 }

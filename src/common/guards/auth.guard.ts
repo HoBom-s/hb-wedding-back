@@ -24,11 +24,11 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException("Missing access token.");
         }
         try {
-            const userEmail = await this.jwtService.verifyAsync(accessToken, {
+            const { email } = await this.jwtService.verifyAsync(accessToken, {
                 secret: GLOBAL_ENV.JWT_SECRET,
             });
 
-            const userId = await this.redisHelper.getCache(userEmail);
+            const userId = await this.redisHelper.getCache(email);
 
             req["user"] = userId;
         } catch {

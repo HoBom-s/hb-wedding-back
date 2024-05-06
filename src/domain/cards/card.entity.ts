@@ -15,7 +15,7 @@ export enum CardDirection {
 
 @Entity("card")
 export class Card extends Common {
-    @ManyToOne(() => User, { eager: false })
+    @ManyToOne(() => User, { eager: true })
     user: User;
 
     @Column({

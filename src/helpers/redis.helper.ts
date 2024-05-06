@@ -1,5 +1,7 @@
+import { Injectable } from "@nestjs/common";
 import { redisClient } from "src/config/redis.config";
 
+@Injectable()
 export class RedisHelper {
     private readonly SERVICE_NAME: string = "HBWD";
     private readonly EXP_TIME: number = 3600; // 1hour in sec

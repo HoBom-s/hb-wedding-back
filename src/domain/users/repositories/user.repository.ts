@@ -18,4 +18,8 @@ export class UserRepository implements UserBaseRepository {
     async findByEmail(email: string): Promise<User> {
         return this.user.findOneBy({ email });
     }
+
+    async findById(id: string): Promise<User> {
+        return this.user.findOneBy({ id });
+    }
 }

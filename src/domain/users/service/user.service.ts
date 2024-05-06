@@ -9,7 +9,6 @@ import { AlreadyExistUserException } from "../exceptions/already-exist-user.exce
 import { JwtService } from "@nestjs/jwt";
 import { UserBaseRepository } from "../repositories/user-base.repository";
 import { UserBaseService } from "./user-base.service";
-import { redisClient } from "src/config/redis.config";
 import { RedisHelper } from "src/helpers/redis.helper";
 
 @Injectable()
@@ -73,5 +72,11 @@ export class UserService implements UserBaseService {
         await this.redisHelper.setCache(foundUser.email, foundUser.id);
 
         return { accessToken };
+    }
+
+    async findOneUserById(userId: string): Promise<User> {
+        const foundUser = await this.userRepository.findById(userId);
+
+        return foundUser;
     }
 }
