@@ -16,11 +16,7 @@ export enum CardDirection {
 @Entity("card")
 export class Card extends Common {
     @ManyToOne(() => User, { eager: false })
-    @JoinColumn({ name: "userId" })
     user: User;
-
-    @Column()
-    userId: string;
 
     @Column({
         type: "varchar",

@@ -7,11 +7,6 @@ export class CardCreateDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    userId: string;
-
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsString()
     title: string;
 
     @ApiProperty({ enum: ["vertical", "horizontal"] })

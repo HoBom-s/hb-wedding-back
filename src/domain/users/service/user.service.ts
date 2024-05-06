@@ -9,6 +9,8 @@ import { AlreadyExistUserException } from "../exceptions/already-exist-user.exce
 import { JwtService } from "@nestjs/jwt";
 import { UserBaseRepository } from "../repositories/user-base.repository";
 import { UserBaseService } from "./user-base.service";
+import { redisClient } from "src/config/redis.config";
+import { RedisHelper } from "src/helpers/redis.helper";
 
 @Injectable()
 export class UserService implements UserBaseService {
@@ -16,6 +18,7 @@ export class UserService implements UserBaseService {
         @Inject(UserBaseRepository)
         private readonly userRepository: UserBaseRepository,
         private readonly jwtService: JwtService,
+        private readonly redisHelper: RedisHelper,
     ) {}
 
     async createUser(
@@ -66,6 +69,8 @@ export class UserService implements UserBaseService {
 
         const payload = { email: foundUser.email };
         const accessToken = await this.jwtService.signAsync(payload);
+
+        await this.redisHelper.setCache(foundUser.email, foundUser.id);
 
         return { accessToken };
     }

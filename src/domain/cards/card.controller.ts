@@ -6,6 +6,8 @@ import {
     Param,
     Patch,
     Post,
+    UseGuards,
+    Request,
 } from "@nestjs/common";
 import { CardService } from "./card.service";
 import { CardCreateDto } from "./dtos/card-create.dto";
@@ -20,19 +22,26 @@ import {
     ApiParam,
     ApiTags,
 } from "@nestjs/swagger";
+import { AuthGuard } from "src/common/guards/auth.guard";
+import { RedisHelper } from "src/helpers/redis.helper";
+import { InvalidUserException } from "../users/exceptions/invalid-user.exception";
 
 @ApiTags("Card API")
 @Controller("/api/v1/cards")
 export class CardController {
-    constructor(private readonly cardService: CardService) {}
+    constructor(
+        private readonly cardService: CardService,
+        private readonly redisHelper: RedisHelper,
+    ) {}
 
-    /**
-     * @Todo @robinyeon
-     * - token 적용 후 userId 가져오기
-     */
+    @UseGuards(AuthGuard)
+    @Get("/")
+    async getAllCardsByUser(@Request() req): Promise<Card[]> {
+        const userId = req.user;
+        const foundCards = await this.cardService.getAllCardsByUser(userId);
 
-    // @Get("/")
-    // async getAllCardsByUser() {}
+        return foundCards;
+    }
 
     @Get("/:id")
     @ApiOperation({ summary: "Get one card by cardID." })
@@ -40,9 +49,11 @@ export class CardController {
     @ApiFoundResponse({ description: "One card successfully found." })
     async getOneCardById(@Param("id") id: string): Promise<Card> {
         const foundCard = await this.cardService.getOneCardById(id);
+
         return foundCard;
     }
 
+    @UseGuards(AuthGuard)
     @Post("/")
     @ApiOperation({ summary: "Create new card." })
     @ApiBody({ type: CardCreateDto })
@@ -51,6 +62,7 @@ export class CardController {
         type: Card,
     })
     async createCard(@Body() cardCreateRequest: CardCreateDto): Promise<Card> {
+        const userEmail = req.user;
         const createdCard =
             await this.cardService.createCard(cardCreateRequest);
         return createdCard;

@@ -7,10 +7,15 @@ import {
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { GLOBAL_ENV } from "src/config/global.env.config";
+import { InvalidUserException } from "src/domain/users/exceptions/invalid-user.exception";
+import { RedisHelper } from "src/helpers/redis.helper";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    constructor(private jwtService: JwtService) {}
+    constructor(
+        private jwtService: JwtService,
+        private readonly redisHelper: RedisHelper,
+    ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const req = context.switchToHttp().getRequest();
@@ -19,12 +24,15 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException("Missing access token.");
         }
         try {
-            const payload = await this.jwtService.verifyAsync(accessToken, {
+            const userEmail = await this.jwtService.verifyAsync(accessToken, {
                 secret: GLOBAL_ENV.JWT_SECRET,
             });
-            req["user"] = payload;
+
+            const userId = await this.redisHelper.getCache(userEmail);
+
+            req["user"] = userId;
         } catch {
-            throw new UnauthorizedException("Invalid access token.");
+            throw new InvalidUserException();
         }
         return true;
     }

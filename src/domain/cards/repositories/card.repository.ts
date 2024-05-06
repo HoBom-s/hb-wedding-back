@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
 import { Card } from "../card.entity";
-import { DeleteResult, Repository, UpdateResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { CardCreateDto } from "../dtos/card-create.dto";
 import { CardUpdateDto } from "../dtos/card-update.dto";
 import { CardCustomRepository } from "./card-custom.repository";
@@ -9,7 +8,7 @@ import { CardCustomRepository } from "./card-custom.repository";
 @Injectable()
 export class CardRepository extends CardCustomRepository {
     async getAllCardsByUser(userId: string): Promise<Card[]> {
-        return this.card.findBy({ userId });
+        return this.card.findBy({ user: { id: userId } });
     }
 
     async createCard(cardCreateRequest: CardCreateDto): Promise<Card> {

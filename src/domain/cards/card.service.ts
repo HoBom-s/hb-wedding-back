@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { CardRepository } from "./repositories/card.repository";
 import { Card } from "./card.entity";
 import { CardCreateDto } from "./dtos/card-create.dto";
@@ -11,8 +11,10 @@ import { AlreadyExistCardException } from "./exceptions/already-exist-card.excep
 export class CardService {
     constructor(private readonly cardRepository: CardRepository) {}
 
-    async getAllCardsByUser(userId: string): Promise<Card[]> {
-        return this.cardRepository.getAllCardsByUser(userId);
+    async getAllCardsByUser(userId: string) {
+        const foundCards = await this.cardRepository.getAllCardsByUser(userId);
+
+        return foundCards;
     }
 
     async getOneCardById(id: string): Promise<Card> {
