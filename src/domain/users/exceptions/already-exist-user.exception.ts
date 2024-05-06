@@ -5,7 +5,7 @@ import { BaseException } from "src/common/exceptions/base.exception";
 export class AlreadyExistUserException extends BaseException {
     constructor() {
         super(
-            "Alreay exist user !",
+            "Alreay existing user !",
             UserErrorEnum.ALREADY_EXIST,
             HttpStatus.CONFLICT,
         );

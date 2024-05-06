@@ -7,8 +7,11 @@ import { SentryInterceptor } from "./common/interceptors/sentry.interceptor";
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
 import { AppModule } from "./app.module";
 import { winstonLogger } from "./utils/winston.util";
+import { redisConnection } from "./config/redis.config";
 
 async function bootstrap() {
+    await redisConnection();
+
     Sentry.init({
         dsn: GLOBAL_ENV.SENTRY_DNS,
     });
