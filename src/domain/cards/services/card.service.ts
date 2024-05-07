@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { CardRepository } from "../repositories/card.repository";
 import { Card } from "../entities/card.entity";
 import { CardCreateDto } from "../dtos/card-create.dto";
@@ -6,15 +6,16 @@ import { CardUpdateDto } from "../dtos/card-update.dto";
 import { DeleteResult } from "typeorm";
 import { CannotFindCardException } from "../exceptions/cannot-find-card.exception";
 import { AlreadyExistCardException } from "../exceptions/already-exist-card.exception";
-import { UserService } from "../../users/services/user.service";
 import { InvalidAccessToCardException } from "../exceptions/invalid-access-to-card.exception";
 import { CardBaseService } from "./card-base.service";
+import { UserBaseRepository } from "src/domain/users/repositories/user-base.repository";
 
 @Injectable()
 export class CardService implements CardBaseService {
     constructor(
         private readonly cardRepository: CardRepository,
-        private readonly userService: UserService,
+        @Inject(UserBaseRepository)
+        private readonly userService: UserBaseRepository,
     ) {}
 
     async getAllCardsByUser(userId: string) {
@@ -42,7 +43,7 @@ export class CardService implements CardBaseService {
 
         if (foundCard) throw new AlreadyExistCardException();
 
-        const foundUser = await this.userService.findOneUserById(userId);
+        const foundUser = await this.userService.findById(userId);
 
         return this.cardRepository.createCard(cardCreateRequest, foundUser);
     }
