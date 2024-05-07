@@ -1,7 +1,6 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, UseInterceptors } from "@nestjs/common";
 import { User } from "../entities/user.entity";
 import { UserCreateDto } from "../dtos/user-create.dto";
-import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
 import { BcryptHelper } from "src/helpers/bcrypt.helper";
 import { UserSigninDto } from "../dtos/user-signin.dto";
 import { CannotFindUserException } from "../exceptions/cannot-find-user.exception";
@@ -10,6 +9,7 @@ import { JwtService } from "@nestjs/jwt";
 import { UserBaseRepository } from "../repositories/user-base.repository";
 import { UserBaseService } from "./user-base.service";
 import { RedisHelper } from "src/helpers/redis.helper";
+import { ExcludePassword } from "../interceptors/exclude-password.interceptor";
 
 @Injectable()
 export class UserService implements UserBaseService {
@@ -20,9 +20,8 @@ export class UserService implements UserBaseService {
         private readonly redisHelper: RedisHelper,
     ) {}
 
-    async createUser(
-        userCreateRequest: UserCreateDto,
-    ): Promise<UserCreateResponseDto> {
+    @UseInterceptors(ExcludePassword)
+    async createUser(userCreateRequest: UserCreateDto): Promise<UserCreateDto> {
         const alreadyFoundUser: User = await this.userRepository.findByEmail(
             userCreateRequest.email,
         );
@@ -40,10 +39,7 @@ export class UserService implements UserBaseService {
             password: encodedPassword,
         });
 
-        const createUserResponse: UserCreateResponseDto =
-            UserCreateResponseDto.of(createdUser);
-
-        return createUserResponse;
+        return createdUser;
     }
 
     async signinUser(
@@ -76,6 +72,7 @@ export class UserService implements UserBaseService {
 
     async findOneUserById(userId: string): Promise<User> {
         const foundUser = await this.userRepository.findById(userId);
+        if (!foundUser) throw new CannotFindUserException();
 
         return foundUser;
     }

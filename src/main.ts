@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 import { BadRequestException, ValidationPipe } from "@nestjs/common";
 import * as Sentry from "@sentry/node";

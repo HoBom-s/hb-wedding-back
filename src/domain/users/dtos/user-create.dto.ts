@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Exclude } from "class-transformer";
 import { IsNotEmpty, IsString, Matches } from "class-validator";
 
 export class UserCreateDto {
@@ -42,6 +43,7 @@ export class UserCreateDto {
         message:
             "The password must be at least 8 characters long, including number & special characters.",
     })
+    @Exclude()
     password: string;
 
     @ApiProperty({
