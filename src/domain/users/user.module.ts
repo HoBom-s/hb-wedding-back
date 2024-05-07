@@ -8,7 +8,6 @@ import { JwtModule } from "@nestjs/jwt";
 import { GLOBAL_ENV } from "src/config/global.env.config";
 import { UserBaseService } from "./services/user-base.service";
 import { UserBaseRepository } from "./repositories/user-base.repository";
-import { RedisHelper } from "src/helpers/redis.helper";
 
 @Module({
     imports: [
@@ -27,7 +26,6 @@ import { RedisHelper } from "src/helpers/redis.helper";
             provide: UserBaseService,
             useClass: UserService,
         },
-        RedisHelper,
     ],
     controllers: [UserController],
     exports: [UserBaseRepository, UserBaseService],
