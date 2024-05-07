@@ -1,13 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { Card } from "../entities/card.entity";
-import { DeleteResult, UpdateResult } from "typeorm";
+import { DeleteResult, Repository, UpdateResult } from "typeorm";
 import { CardCreateDto } from "../dtos/card-create.dto";
 import { CardUpdateDto } from "../dtos/card-update.dto";
-import { CardCustomRepository } from "./card-custom.repository";
 import { User } from "src/domain/users/entities/user.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CardBaseRepository } from "./card-base.repository";
+import { Columns, Values } from "../../../types/common.type";
 
 @Injectable()
-export class CardRepository extends CardCustomRepository {
+export class CardRepository implements CardBaseRepository {
+    constructor(
+        @InjectRepository(Card) private readonly card: Repository<Card>,
+    ) {}
+
     async getAllCardsByUser(userId: string): Promise<Card[]> {
         return this.card.findBy({
             user: { id: userId },
@@ -30,5 +36,12 @@ export class CardRepository extends CardCustomRepository {
 
     async removeCard(id: string): Promise<DeleteResult> {
         return this.card.softDelete(id);
+    }
+
+    async getOneCardBy(
+        column: Columns<Card>,
+        value: Values<Card>,
+    ): Promise<Card> {
+        return this.card.findOneBy({ [column]: value });
     }
 }

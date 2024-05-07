@@ -10,7 +10,6 @@ import {
     Request,
     Inject,
 } from "@nestjs/common";
-import { CardService } from "../services/card.service";
 import { CardCreateDto } from "../dtos/card-create.dto";
 import { Card } from "../entities/card.entity";
 import { CardUpdateDto } from "../dtos/card-update.dto";

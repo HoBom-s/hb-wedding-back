@@ -13,7 +13,7 @@ export interface CardBaseService {
         userId: string,
     ): Promise<Card>;
     removeCard(id: string, userId: string): Promise<DeleteResult>;
-    validateUser(id: string, userId: string): Promise<Card>;
+    validateUser(id: string, userId: string): Promise<void>;
 }
 
 export const CardBaseService = Symbol("CardBaseService");

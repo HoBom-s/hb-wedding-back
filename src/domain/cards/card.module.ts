@@ -6,10 +6,22 @@ import { UserModule } from "../users/user.module";
 import { CardService } from "./services/card.service";
 import { CardController } from "./controllers/card.controller";
 import { UserService } from "../users/services/user.service";
+import { CardBaseService } from "./services/card-base.service";
+import { CardBaseRepository } from "./repositories/card-base.repository";
 
 @Module({
     imports: [TypeOrmModule.forFeature([Card]), UserModule],
-    providers: [CardService, CardRepository, UserService],
+    providers: [
+        {
+            provide: CardBaseService,
+            useClass: CardService,
+        },
+        {
+            provide: CardBaseRepository,
+            useClass: CardRepository,
+        },
+        UserService,
+    ],
     controllers: [CardController],
 })
 export class CardModule {}
