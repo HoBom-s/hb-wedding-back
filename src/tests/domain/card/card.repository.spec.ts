@@ -2,7 +2,7 @@ import { INestApplication } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { TypeOrmConfig } from "src/config/typeorm.config";
-import { CardDirection } from "src/domain/cards/card.entity";
+import { CardDirection } from "src/domain/cards/entities/card.entity";
 import { CardModule } from "src/domain/cards/card.module";
 import { CardRepository } from "src/domain/cards/repositories/card.repository";
 import { UserRepository } from "src/domain/users/repositories/user.repository";

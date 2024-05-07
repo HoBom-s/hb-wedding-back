@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";
 import { TypeOrmConfig } from "src/config/typeorm.config";
 import { UserModule } from "src/domain/users/user.module";
-import { UserService } from "src/domain/users/service/user.service";
+import { UserService } from "src/domain/users/services/user.service";
 
 describe("CategoryService", () => {
     let app: INestApplication;

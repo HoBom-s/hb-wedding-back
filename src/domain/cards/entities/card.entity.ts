@@ -6,7 +6,7 @@ import {
     ManyToOne,
 } from "typeorm";
 import { Common } from "src/common/entities/common.entity";
-import { User } from "../users/entity/user.entity";
+import { User } from "../../users/entities/user.entity";
 
 export enum CardDirection {
     VERTICAL = "vertical",

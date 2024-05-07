@@ -3,7 +3,7 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserCreateDto } from "../dtos/user-create.dto";
 import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
 import { UserSigninDto } from "../dtos/user-signin.dto";
-import { UserBaseService } from "../service/user-base.service";
+import { UserBaseService } from "../services/user-base.service";
 
 @Controller("/api/v1/users")
 @ApiTags("User API")

@@ -1,5 +1,5 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { Card } from "../card.entity";
+import { Card } from "../entities/card.entity";
 import { Repository } from "typeorm";
 
 type CardColumn = keyof Card;

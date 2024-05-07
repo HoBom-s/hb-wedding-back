@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, IsEnum } from "class-validator";
 import { Transform } from "class-transformer";
-import { CardDirection } from "../card.entity";
+import { CardDirection } from "../entities/card.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CardCreateDto {

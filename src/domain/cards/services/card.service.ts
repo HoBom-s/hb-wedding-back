@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { CardRepository } from "./repositories/card.repository";
-import { Card } from "./card.entity";
-import { CardCreateDto } from "./dtos/card-create.dto";
-import { CardUpdateDto } from "./dtos/card-update.dto";
+import { CardRepository } from "../repositories/card.repository";
+import { Card } from "../entities/card.entity";
+import { CardCreateDto } from "../dtos/card-create.dto";
+import { CardUpdateDto } from "../dtos/card-update.dto";
 import { DeleteResult } from "typeorm";
-import { CannotFindCardException } from "./exceptions/cannot-find-card.exception";
-import { AlreadyExistCardException } from "./exceptions/already-exist-card.exception";
-import { UserService } from "../users/service/user.service";
-import { InvalidAccessToCardException } from "./exceptions/invalid-access-to-card.exception";
+import { CannotFindCardException } from "../exceptions/cannot-find-card.exception";
+import { AlreadyExistCardException } from "../exceptions/already-exist-card.exception";
+import { UserService } from "../../users/services/user.service";
+import { InvalidAccessToCardException } from "../exceptions/invalid-access-to-card.exception";
 
 @Injectable()
 export class CardService {

@@ -1,7 +1,7 @@
 import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
 import { UserCreateDto } from "../dtos/user-create.dto";
 import { UserSigninDto } from "../dtos/user-signin.dto";
-import { User } from "../entity/user.entity";
+import { User } from "../entities/user.entity";
 
 export interface UserBaseService {
     createUser(

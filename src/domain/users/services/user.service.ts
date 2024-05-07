@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { User } from "../entity/user.entity";
+import { User } from "../entities/user.entity";
 import { UserCreateDto } from "../dtos/user-create.dto";
 import { UserCreateResponseDto } from "../dtos/user-create-response.dto";
 import { BcryptHelper } from "src/helpers/bcrypt.helper";

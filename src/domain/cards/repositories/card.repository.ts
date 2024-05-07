@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { Card } from "../card.entity";
+import { Card } from "../entities/card.entity";
 import { DeleteResult, UpdateResult } from "typeorm";
 import { CardCreateDto } from "../dtos/card-create.dto";
 import { CardUpdateDto } from "../dtos/card-update.dto";
 import { CardCustomRepository } from "./card-custom.repository";
-import { User } from "src/domain/users/entity/user.entity";
+import { User } from "src/domain/users/entities/user.entity";
 
 @Injectable()
 export class CardRepository extends CardCustomRepository {
