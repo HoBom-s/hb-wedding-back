@@ -8,6 +8,7 @@ import {
     Post,
     UseGuards,
     Request,
+    Inject,
 } from "@nestjs/common";
 import { CardService } from "../services/card.service";
 import { CardCreateDto } from "../dtos/card-create.dto";
@@ -23,11 +24,14 @@ import {
     ApiTags,
 } from "@nestjs/swagger";
 import { AuthGuard } from "src/common/guards/auth.guard";
+import { CardBaseService } from "../services/card-base.service";
 
 @ApiTags("Card API")
 @Controller("/api/v1/cards")
 export class CardController {
-    constructor(private readonly cardService: CardService) {}
+    constructor(
+        @Inject(CardBaseService) private readonly cardService: CardBaseService,
+    ) {}
 
     @UseGuards(AuthGuard)
     @Get("/")

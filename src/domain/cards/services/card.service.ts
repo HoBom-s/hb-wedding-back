@@ -8,9 +8,10 @@ import { CannotFindCardException } from "../exceptions/cannot-find-card.exceptio
 import { AlreadyExistCardException } from "../exceptions/already-exist-card.exception";
 import { UserService } from "../../users/services/user.service";
 import { InvalidAccessToCardException } from "../exceptions/invalid-access-to-card.exception";
+import { CardBaseService } from "./card-base.service";
 
 @Injectable()
-export class CardService {
+export class CardService implements CardBaseService {
     constructor(
         private readonly cardRepository: CardRepository,
         private readonly userService: UserService,
@@ -30,7 +31,10 @@ export class CardService {
         return foundCard;
     }
 
-    async createCard(userId, cardCreateRequest: CardCreateDto): Promise<Card> {
+    async createCard(
+        userId: string,
+        cardCreateRequest: CardCreateDto,
+    ): Promise<Card> {
         const foundCard = await this.cardRepository.getOneCardBy(
             "title",
             cardCreateRequest.title,
@@ -62,8 +66,8 @@ export class CardService {
         return this.cardRepository.removeCard(id);
     }
 
-    async validateUser(cardId: string, userId: string) {
-        const foundCard = await this.getOneCardById(cardId);
+    async validateUser(id: string, userId: string): Promise<void> {
+        const foundCard = await this.getOneCardById(id);
         if (foundCard.user.id !== userId)
             throw new InvalidAccessToCardException();
         return;
